@@ -1,7 +1,9 @@
 # Note that these are very rough and ready - these should be
 # implemented properly as custom types. The challenge of that is
 # parsing the output of the ipa commands in Ruby. Or, better, using
-# the JSON interface.
+# the JSON interface. A nice example of simple processing of command
+# line program output can be found in:
+# http://serverfault.com/questions/127460/how-do-i-install-a-yum-package-group-with-puppet
 
 define ipa::automount::location (
   $location_name,
