@@ -68,15 +68,15 @@ define ipa::automount::key (
   $mount_info
 )
 {
-  Exec { path => [ "/bin/", "/sbin/" , "/usr/bin/", "/usr/sbin/" ] }
+  Exec { path => [ "/bin/", "/sbin/", "/usr/bin/", "/usr/sbin/" ] }
 
   if $ensure == 'present' {
-    exec {"automountkey-$key_name":
-      command => "runuser -l admin -c 'ipa automountkey-add $location $map --key=$key_name --info=$mount_info'",
+    exec {"automountkey-$location-$map-$key_name":
+      command => "runuser -l admin -c 'ipa automountkey-add $location $map --key=$key_name --info=\"$mount_info\"'",
       unless  => "runuser -l admin -c 'ipa automountkey-show $location $map --key=$key_name >/dev/null 2>&1'",
     }
   } else {
-    exec {"automountkey-remove-$key_name":
+    exec {"automountkey-$location-$map-remove-$key_name":
       command => "runuser -l admin -c 'ipa automountkey-del $location $map --key=$key_name'",
       onlyif  => "runuser -l admin -c 'ipa automountkey-show $location $map --key=$key_name >/dev/null 2>&1'",
     }
